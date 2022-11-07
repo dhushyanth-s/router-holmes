@@ -1,7 +1,7 @@
 import { styled } from "../../stitches.config";
 
 import { Details } from "./details";
-import { TestMap } from "./Map";
+import { VectorMap } from "./Map";
 
 const Base = styled("main", {
   width: "100%",
@@ -16,7 +16,7 @@ export default function Dashboard() {
     <Base>
       <Details />
       {/* <AnalyticsMap /> */}
-      <TestMap />
+      <VectorMap />
     </Base>
   );
 }

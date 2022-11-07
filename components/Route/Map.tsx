@@ -68,7 +68,7 @@ const fetcher = (url: string, id: number) =>
     .send({ id })
     .then((res) => res.body);
 
-export function TestMap(props: { id: number }) {
+export function VectorMap(props: { id: number }) {
   const { data, error } = useSWR(["/api/routes", props.id], fetcher, {
     refreshInterval: 1000,
   });
@@ -80,7 +80,8 @@ export function TestMap(props: { id: number }) {
     id: "trips-layer",
     data,
     getPath: (d) => d.waypoints.map((p: any) => [p.X_loc, p.Y_loc]),
-    getTimestamps: (d) => d.waypoints.map((p: any) => p.Timestamp - data[0].waypoints[0].Timestamp),
+    getTimestamps: (d) =>
+      d.waypoints.map((p: any) => p.Timestamp - data[0].waypoints[0].Timestamp),
     getColor: [253, 128, 93],
     opacity: 0.8,
     widthMinPixels: 5,

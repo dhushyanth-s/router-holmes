@@ -63,7 +63,7 @@ const linedata = [
 
 const fetcher = (url: string) => request.get(url).then((res) => res.body);
 
-export function TestMap() {
+export function VectorMap() {
   const { data, error } = useSWR("/api/diagnostic", fetcher, {
     refreshInterval: 1000,
   });
