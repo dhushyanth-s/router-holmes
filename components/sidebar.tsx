@@ -24,7 +24,11 @@ export function Sidebar(props: { children: React.ReactNode }) {
             />
             <SidebarIndicator />
           </ListItem>
-          <ListItem as={Link} href="/dashboard">
+          <ListItem
+            as={Link}
+            href="/routes"
+            active={router.asPath === "/routes"}
+          >
             <Person
               width={"2rem"}
               height="auto"
@@ -34,17 +38,11 @@ export function Sidebar(props: { children: React.ReactNode }) {
             />
             <SidebarIndicator />
           </ListItem>
-          <ListItem as={Link} href="/dashboard">
-            <Gear
-              width={"2rem"}
-              height="auto"
-              style={{
-                position: "relative",
-              }}
-            />
-            <SidebarIndicator />
-          </ListItem>
-          <ListItem as={Link} href="/dashboard">
+          <ListItem
+            as={Link}
+            href="/diagnostic"
+            active={router.asPath === "/diagnostic"}
+          >
             <Gauge
               width={"2rem"}
               height="auto"

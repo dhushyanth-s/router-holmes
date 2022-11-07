@@ -1,40 +1,65 @@
+import { useState } from "react";
 import request from "superagent";
 import useSWR from "swr";
 import { styled } from "../../stitches.config";
 
-const fetcher = (url: string) => request.get(url).then((res) => res.body);
-
-export function Details() {
-  const { data, error } = useSWR("/api/total", fetcher, {
-    refreshInterval: 1000,
-  });
-
-  if (error) return <div>!</div>;
-  if (!data)
-    return (
-      <DetailsContainer>
-        <DetailsScrollContainer>
-          <Title>General Statistics</Title>
-          <SectionTitle>Total Users</SectionTitle>
-          <BoldData>Loading...</BoldData>
-          <SectionTitle>Total Data</SectionTitle>
-          <BoldData>Loading...</BoldData>
-        </DetailsScrollContainer>
-      </DetailsContainer>
-    );
-
+export function Details({ onChooseId }: { onChooseId: (id: number) => void }) {
+  const [id, setId] = useState(0);
   return (
     <DetailsContainer>
       <DetailsScrollContainer>
-        <Title>General Statistics</Title>
-        <SectionTitle>Total Users</SectionTitle>
-        <BoldData>{data[1][0].People}</BoldData>
-        <SectionTitle>Total Data</SectionTitle>
-        <BoldData>{data[0][0].Sum / 1000000} GB</BoldData>
+        <Title>Route Visualizer</Title>
+        <SectionTitle>Select User ID</SectionTitle>
+        <NumberInput
+          type="number"
+          onChange={(e) => {
+            setId(parseInt(e.target.value, 10));
+          }}
+          value={id}
+        />
+        <Button
+          onClick={() => {
+            onChooseId(id);
+          }}
+        >
+          Confirm
+        </Button>
       </DetailsScrollContainer>
     </DetailsContainer>
   );
 }
+
+const NumberInput = styled("input", {
+  fontFamily: "Poppins",
+  borderRadius: "4px",
+  padding: "8px",
+  fontSize: "16px",
+  width: "100%",
+  boxSizing: "border-box",
+});
+
+const Button = styled("button", {
+  borderRadius: "4px",
+  padding: "8px",
+  fontSize: "16px",
+  width: "100%",
+  boxSizing: "border-box",
+  border: "none",
+  backgroundColor: "$theme",
+  marginTop: "16px",
+  fontWeight: "bold",
+  fontFamily: "Poppins",
+  cursor: "pointer",
+  transition: "all 0.2s ease-in-out",
+
+  "&:hover": {
+    transform: "translate(0, -5px)",
+  },
+
+  "&:active": {
+    transform: "translate(0, 0)",
+  },
+});
 
 const DetailsContainer = styled("div", {
   height: "95%",

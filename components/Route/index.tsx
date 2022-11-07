@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { styled } from "../../stitches.config";
-
 import { Details } from "./details";
 import { TestMap } from "./Map";
 
@@ -12,11 +12,16 @@ const Base = styled("main", {
 });
 
 export default function Dashboard() {
+  const [id, setId] = useState(0);
   return (
     <Base>
-      <Details />
+      <Details
+        onChooseId={(newId) => {
+          setId(newId);
+        }}
+      />
       {/* <AnalyticsMap /> */}
-      <TestMap />
+      <TestMap id={id} />
     </Base>
   );
 }

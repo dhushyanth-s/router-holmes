@@ -64,7 +64,7 @@ const linedata = [
 const fetcher = (url: string) => request.get(url).then((res) => res.body);
 
 export function TestMap() {
-  const { data, error } = useSWR("/api/heatmap", fetcher, {
+  const { data, error } = useSWR("/api/diagnostic", fetcher, {
     refreshInterval: 1000,
   });
 
@@ -75,14 +75,14 @@ export function TestMap() {
     id: "column-layer",
     data,
     diskResolution: 12,
-    radius: 100,
+    radius: 30,
     extruded: true,
     pickable: true,
-    elevationScale: 500,
+    elevationScale: 5,
     getPosition: (d) => [d.X_loc, d.Y_loc],
-    getFillColor: (d: any) => [40, 100, d.Freq * 40, 255],
+    getFillColor: (d: any) => [(d.Temperature - 30) * 7, 100, 40, 255],
     getLineColor: [0, 0, 0],
-    getElevation: (d) => d.Freq,
+    getElevation: (d) => d.Temperature,
   });
 
   return (

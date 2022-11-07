@@ -2,7 +2,8 @@ import maplibregl, { Map } from "maplibre-gl";
 import { useRef, useEffect } from "react";
 
 import DeckGL from "@deck.gl/react/typed";
-import { ColumnLayer } from "@deck.gl/layers/typed";
+// import { ColumnLayer } from "@deck.gl/layers/typed";
+import { TripsLayer } from "@deck.gl/geo-layers/typed";
 import { Map as RMap } from "react-map-gl";
 import request from "superagent";
 import useSWR from "swr";
@@ -61,28 +62,32 @@ const linedata = [
   },
 ];
 
-const fetcher = (url: string) => request.get(url).then((res) => res.body);
+const fetcher = (url: string, id: number) =>
+  request
+    .post(url)
+    .send({ id })
+    .then((res) => res.body);
 
-export function TestMap() {
-  const { data, error } = useSWR("/api/heatmap", fetcher, {
+export function TestMap(props: { id: number }) {
+  const { data, error } = useSWR(["/api/routes", props.id], fetcher, {
     refreshInterval: 1000,
   });
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-  const layer = new ColumnLayer({
-    id: "column-layer",
+  const layer = new TripsLayer({
+    id: "trips-layer",
     data,
-    diskResolution: 12,
-    radius: 100,
-    extruded: true,
-    pickable: true,
-    elevationScale: 500,
-    getPosition: (d) => [d.X_loc, d.Y_loc],
-    getFillColor: (d: any) => [40, 100, d.Freq * 40, 255],
-    getLineColor: [0, 0, 0],
-    getElevation: (d) => d.Freq,
+    getPath: (d) => d.waypoints.map((p: any) => [p.X_loc, p.Y_loc]),
+    getTimestamps: (d) => d.waypoints.map((p: any) => p.Timestamp - data[0].waypoints[0].Timestamp),
+    getColor: [253, 128, 93],
+    opacity: 0.8,
+    widthMinPixels: 5,
+    rounded: true,
+    fadeTrail: true,
+    trailLength: 200,
+    currentTime: 100,
   });
 
   return (
@@ -100,3 +105,7 @@ export function TestMap() {
     </DeckGL>
   );
 }
+
+// Select unix_timestamp(Timestamp) as Timestamp, X_loc,Y_loc from Request, Router
+// WHERE Person_ID = 1 AND Request.Router_ID = Router.ID
+// ORDER BY Timestamp
