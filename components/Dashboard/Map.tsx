@@ -75,7 +75,7 @@ export function VectorMap() {
     id: "column-layer",
     data,
     diskResolution: 12,
-    radius: 100,
+    radius: 30,
     extruded: true,
     pickable: true,
     elevationScale: 500,
