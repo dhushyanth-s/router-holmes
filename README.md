@@ -26,9 +26,24 @@ The repository is structured as follows:
 - `public`: Contains the logo and favicon for the project
 - `pages`: Next pages directory, contains api routes and main pages.
 - `components`: Contains all the components used in the project.
+- 'data' : Contains simulator to create data, along with the results of the simulation
 - Other configuration files
 
 ## Data Simulator
+Contains the jupyter notebook for data simulation.
+There are 4 files:
+- `router.csv`: Not streaming data, represents the routers and their location in the city.
+- `people.csv`: Not streaming data, represents the mapping between a persons's ID and their name.
+- `diagnostics.csv`: Streaming data, contains the diagnostic details sent by each router at each timestep.
+- `request.csv`: Streaming data, contains the requests sent by each person to the router/city that they are currently in.
+
+To stream the simulation, you can use any kafka producer, we have used a producer that streams it to confluent. The producer files are also in the `data` directory. To stream the data to confluent please refer [here](https://github.com/mtpatter/time-series-kafka-demo).
+
+In short, after setting up the docker image from the above repo, you have to execute 
+``docker run -it --rm \
+      -v $PWD:/home \
+      --network=host \
+      kafkacsv python <path to producer> <topic name>``
 
 ## Getting Started
 
