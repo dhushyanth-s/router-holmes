@@ -7,6 +7,9 @@
 The project implements a Realtime Analytics dashboard for hypothetical company which is in-charge of managing routers in New York City. It simulates the routers, its status and individual people across the city and displays the data in a realtime-updated dashboard with useful visualizations.
 
 ## Architecture
+<p align="center">
+  <img src="./Architecture.png"  height="400px">
+</p>
 
 ## Tech Stack
 
