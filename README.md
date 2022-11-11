@@ -6,6 +6,8 @@
 
 The project implements a Realtime Analytics dashboard for hypothetical company which is in-charge of managing routers in New York City. It simulates the routers, its status and individual people across the city and displays the data in a realtime-updated dashboard with useful visualizations.
 
+The project was done as a part of [The singlestore hackathon](https://singlestore.devpost.com/). See our demo video [here](https://www.youtube.com/watch?v=uyN8_QmrFkw&ab_channel=VaishakhSreekanthMenon).
+
 ## Architecture
 <p align="center">
   <img src="./Architecture.png"  height="400px">
